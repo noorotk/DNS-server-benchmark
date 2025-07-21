@@ -3,12 +3,18 @@ Configureing DNS server with unbound
 dnf update -y
 dnf install epel-release -y
 dnf install unbound vim htop bind-utils -y
+
+# turn off firewalld and selinux
 setenforce 0
 systemctl stop firewalld
 systemctl status firewalld
+
+# download the query file from github
 mkdir query-file
 cd query-file/
 curl -o unbound-local-queries https://raw.githubusercontent.com/noorotk/queryfiletest/main/unbound-local-queries
+
+#backup unbound original config
 cp /etc/unbound/unbound.conf /etc/unbound/unbound.conf.backup
 
 ##########################################
@@ -20,10 +26,12 @@ access-control: 192.168.122.0/24 allow
 include: "/etc/unbound/local-zones/*.conf"
 ###########################################
 
+# create the local records file
 mkdir /etc/unbound/local-zones
 mv query-file/unbound-local-queries /etc/unbound/local-zones/unbound-local-queries.conf
-dig lachicabionica.com @192.168.122.139
-ip route del default
 
-# to reconnect to internet again 
-ip route add default via 192.168.122.1
+# try to dig some domain found in unbound-local-queries to test if unbound is working
+dig lachicabionica.com @192.168.122.139
+
+# turn off the internet access to the VM and start the benchmark
+ip route del default
