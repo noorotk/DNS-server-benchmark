@@ -1,1 +1,29 @@
 Configureing DNS server with unbound
+------------------------------------
+dnf update -y
+dnf install epel-release -y
+dnf install unbound vim htop bind-utils -y
+setenforce 0
+systemctl stop firewalld
+systemctl status firewalld
+mkdir query-file
+cd query-file/
+curl -o unbound-local-queries https://raw.githubusercontent.com/noorotk/queryfiletest/main/unbound-local-queries
+cp /etc/unbound/unbound.conf /etc/unbound/unbound.conf.backup
+
+##########################################
+# add this in /etc/unbound/unbound.conf
+interface: 192.168.122.139
+access-control: 0.0.0.0/0 refuse
+access-control: 127.0.0.0/8 allow
+access-control: 192.168.122.0/24 allow
+include: "/etc/unbound/local-zones/*.conf"
+###########################################
+
+mkdir /etc/unbound/local-zones
+mv query-file/unbound-local-queries /etc/unbound/local-zones/unbound-local-queries.conf
+dig lachicabionica.com @192.168.122.139
+ip route del default
+
+# to reconnect to internet again 
+ip route add default via 192.168.122.1
