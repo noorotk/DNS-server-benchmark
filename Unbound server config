@@ -31,6 +31,7 @@ systemctl restart unbound
 
 # create the local records file
 mkdir /etc/unbound/local-zones
+cd
 cp query-file/unbound-local-queries /etc/unbound/local-zones/unbound-local-queries.conf
 
 # try to dig some domain found in unbound-local-queries to test if unbound is working
