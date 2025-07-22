@@ -39,3 +39,6 @@ curl -o dnsperf-queries https://raw.githubusercontent.com/noorotk/queryfiletest/
  
 # Run a Basic Benchmark Test
 dnsperf -s 192.168.xx.xx -d dnsperf-queries -t 10
+
+# turn off the internet access to the VM and start the benchmark
+ip route del default
