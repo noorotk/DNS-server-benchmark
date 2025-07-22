@@ -7,6 +7,7 @@ dnf install unbound vim htop bind-utils -y
 # turn off firewalld and selinux
 setenforce 0
 systemctl stop firewalld
+systemctl disable firewalld
 systemctl status firewalld
 
 # download the query file from github
@@ -26,9 +27,11 @@ access-control: 192.168.122.0/24 allow
 include: "/etc/unbound/local-zones/*.conf"
 ###########################################
 
+systemctl restart unbound
+
 # create the local records file
 mkdir /etc/unbound/local-zones
-mv query-file/unbound-local-queries /etc/unbound/local-zones/unbound-local-queries.conf
+cp query-file/unbound-local-queries /etc/unbound/local-zones/unbound-local-queries.conf
 
 # try to dig some domain found in unbound-local-queries to test if unbound is working
 dig lachicabionica.com @192.168.122.139
