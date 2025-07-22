@@ -14,7 +14,7 @@ mkdir query-file
 cd query-file/
 curl -o unbound-local-queries https://raw.githubusercontent.com/noorotk/queryfiletest/main/unbound-local-queries
 
-#backup unbound original config
+# backup unbound original config
 cp /etc/unbound/unbound.conf /etc/unbound/unbound.conf.backup
 
 ##########################################
