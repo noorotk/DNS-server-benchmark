@@ -6,6 +6,7 @@ dnf install unbound vim htop bind-utils -y
 
 # turn off firewalld and selinux
 setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
 systemctl stop firewalld
 systemctl disable firewalld
 systemctl status firewalld
