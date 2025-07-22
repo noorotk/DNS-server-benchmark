@@ -10,6 +10,7 @@ dnf install -y epel-release git vim wget curl net-tools bind-utils
 # Disable Firewall For Testing
 systemctl stop firewalld
 systemctl disable firewalld
+systemctl status firewalld
  
 # Disable SELinux For Initial Testing
 setenforce 0
