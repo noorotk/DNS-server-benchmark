@@ -32,6 +32,7 @@ make install
 dnsperf -v
  
 # Download Query File for Testing
+cd
 mkdir query-file
 cd query-file/
 curl -o dnsperf-queries https://raw.githubusercontent.com/noorotk/queryfiletest/main/dnsperf-queries
