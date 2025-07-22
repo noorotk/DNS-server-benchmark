@@ -7,7 +7,7 @@ first install the os iso image:
 wget https://repo.almalinux.org/almalinux/9.6/isos/x86_64/AlmaLinux-9.6-x86_64-minimal.iso
 
 then make a disk to the install the vm on:
-qemu-img create -f qcow2 /var/lib/libvirt/images/almalinux-server.qcow2 30G
+qemu-img create -f qcow2 /var/lib/libvirt/images/almalinux-server.qcow2 20G
 qcow2 is the type of storage to run the virtual machine
 
 then run on your local pc:
@@ -15,11 +15,11 @@ ssh -L 5901:localhost:5901 user@your-kvm-server-ip
 
 then from the pc ssh session run this to create the VM:
 virt-install --name Almalinux-DNS-Server \
---ram 16384 \
---vcpus 4 \
+--ram 4096 \
+--vcpus 2 \
 --cpu host-model \
 --hvm \
---disk path=/var/lib/libvirt/images/almalinux-server.qcow2,size=30 \
+--disk path=/var/lib/libvirt/images/almalinux-server.qcow2,size=20 \
 --cdrom /var/lib/libvirt/boot/AlmaLinux-9.6-x86_64-minimal.iso \
 --os-variant almalinux9 \
 --network network=default \
