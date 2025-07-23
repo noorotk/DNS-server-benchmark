@@ -3,17 +3,17 @@ create the vm :
 install the required packegs to run kvm:
 dnf install qemu-kvm libvirt libvirt-python3 libguestfs-tools virt-install virt-manager virt-viewer
 
-first install the os iso image:
+first download the iso image:
 wget https://repo.almalinux.org/almalinux/9.6/isos/x86_64/AlmaLinux-9.6-x86_64-minimal.iso
 
-then make a disk to the install the vm on:
+then make a disk to install the vm on:
 qemu-img create -f qcow2 /var/lib/libvirt/images/almalinux-server.qcow2 20G
 qcow2 is the type of storage to run the virtual machine
 
 then run on your local pc:
 ssh -L 5901:localhost:5901 user@your-kvm-server-ip
 
-then from the pc ssh session run this to create the VM:
+then from the pc ssh session, run this to create the VM:
 virt-install --name Almalinux-DNS-Server \
 --ram 4096 \
 --vcpus 2 \
@@ -23,7 +23,7 @@ virt-install --name Almalinux-DNS-Server \
 --cdrom /var/lib/libvirt/boot/AlmaLinux-9.6-x86_64-minimal.iso \
 --os-variant almalinux9 \
 --network network=default \
---graphics vnc,listen=0.0.0.0,port=5901 \
+--graphics vnc,listen=0.0.0.0,port=5901
 
 then run this from the local pc also to open gui to the installation:
 vncviewer localhost:5901
@@ -33,13 +33,9 @@ then the vm should run succesfully, you can see the ip then ssh to it from the k
 
 change hostname:
 hostnamectl set-hostname [name]
-systemctl restart systemd-hostnamed
 ctrl+d then login again
 
-download the bind util tool cause we need it:
-dnf install bind-utils -y
-
-the vm is ready now, repeat the steps for the DNSperf vm.
+the vm is ready now, repeat the steps for the DNSperf VM.
 
 some commands you need:
 virsh list --all
