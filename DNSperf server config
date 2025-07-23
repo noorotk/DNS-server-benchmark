@@ -1,27 +1,27 @@
-DNSPerf Installation & Basic Test Script for AlmaLinux 9
+DNSPerf installation and basic test script for almaLinux 9
 -----------------------------------------------------------
  
-# Update System
+# update system
 dnf update -y
  
-# Install Basic Tools
+# install basic tools
 dnf install -y epel-release git vim wget curl net-tools bind-utils
  
-# Disable Firewall For Testing
+# disable firewall for testing
 systemctl stop firewalld
 systemctl disable firewalld
 systemctl status firewalld
  
-# Disable SELinux For Initial Testing
+# disable SELinux for initial testing
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
  
-# Enable CodeReady Builder (CRB) Repository and Install Build Dependencies
+# enable codeready builder (CRB) repository and install build dependencies
 dnf config-manager --set-enabled crb
 dnf makecache
 dnf install -y openssl-devel ldns-devel ck-devel libnghttp2-devel make gcc libtool autoconf libcap-devel libpcap-devel
  
-# Clone and build DNSPerf
+# clone and build DNSPerf
 git clone https://github.com/DNS-OARC/dnsperf.git
 cd dnsperf
 ./autogen.sh
@@ -29,16 +29,16 @@ cd dnsperf
 make
 make install
  
-# Verify installation
+# verify installation
 dnsperf -v
  
-# Download Query File for Testing
+# download query file for testing
 cd
 mkdir query-file
 cd query-file/
 curl -o dnsperf-queries https://raw.githubusercontent.com/noorotk/queryfiletest/main/dnsperf-queries
  
-# Run a Basic Benchmark Test
+# run a basic benchmark test
 dnsperf -s 192.168.xx.xx -d dnsperf-queries -t 10
 
 # turn off the internet access to the VM and start the benchmark
