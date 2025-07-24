@@ -1,4 +1,4 @@
-# DNSPerf installation and basic test script for almaLinux 9
+# DNSPerf installation for almaLinux 9
 -----------------------------------------------------------
 
 ## update system
